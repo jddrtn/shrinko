@@ -7,17 +7,37 @@ import Convert from "./pages/Convert";
 
 export default function App() {
   return (
-    <div className="min-h-screen bg-zinc-950 text-white">
-      <header className="border-b border-white/10">
+    <div className="min-h-screen bg-[#fff8ec] text-[#24202c]">
+      <header className="border-b-2 border-[#24202c] bg-[#ffd84d]">
         <nav className="mx-auto flex max-w-6xl items-center justify-between px-6 py-4">
-          <Link to="/" className="text-xl font-bold">
+          <Link
+            to="/"
+            className="font-logo inline-block origin-left text-2xl transition-transform duration-300 ease-out hover:scale-x-50 hover:scale-y-75 motion-reduce:transform-none"
+              >
             Shrinko
           </Link>
 
-          <div className="flex gap-4 text-sm text-zinc-300">
-            <Link to="/compress">Compress</Link>
-            <Link to="/resize">Resize</Link>
-            <Link to="/convert">Convert</Link>
+          <div className="flex gap-2 text-sm font-semibold sm:gap-4">
+            <Link
+              to="/compress"
+              className="rounded-full px-3 py-2 transition hover:bg-[#ff735c]"
+            >
+              Compress
+            </Link>
+
+            <Link
+              to="/resize"
+              className="rounded-full px-3 py-2 transition hover:bg-[#9de3c2]"
+            >
+              Resize
+            </Link>
+
+            <Link
+              to="/convert"
+              className="rounded-full px-3 py-2 transition hover:bg-[#5267ff] hover:text-white"
+            >
+              Convert
+            </Link>
           </div>
         </nav>
       </header>

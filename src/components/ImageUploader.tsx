@@ -23,6 +23,7 @@ export default function ImageUploader() {
   const [compressedUrl, setCompressedUrl] = useState("");
 
   const [isCompressing, setIsCompressing] = useState(false);
+  const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
 
   const onDrop = useCallback((acceptedFiles: File[]) => {
@@ -33,6 +34,7 @@ export default function ImageUploader() {
       setPreviewUrl(URL.createObjectURL(selectedImage));
       setCompressedImage(null);
       setCompressedUrl("");
+      setProgress(0);
       setError("");
     }
   }, []);
@@ -80,6 +82,7 @@ export default function ImageUploader() {
     }
 
     setIsCompressing(true);
+    setProgress(0);
     setError("");
     setCompressedImage(null);
     setCompressedUrl("");
@@ -89,12 +92,17 @@ export default function ImageUploader() {
         maxSizeMB: targetSize / 1024,
         useWebWorker: true,
         maxIteration: 15,
+        onProgress: (percentage) => {
+          setProgress(Math.round(percentage));
+        },
       });
 
       setCompressedImage(result);
       setCompressedUrl(URL.createObjectURL(result));
+      setProgress(100);
     } catch {
       setError("Shrinko couldn't compress this image. Please try another file.");
+      setProgress(0);
     } finally {
       setIsCompressing(false);
     }
@@ -105,6 +113,8 @@ export default function ImageUploader() {
     setPreviewUrl("");
     setCompressedImage(null);
     setCompressedUrl("");
+    setIsCompressing(false);
+    setProgress(0);
     setError("");
   };
 
@@ -146,6 +156,7 @@ export default function ImageUploader() {
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
             <div>
               <p className="font-medium">{image.name}</p>
+
               <p className="mt-1 text-sm text-zinc-400">
                 Original size: {formatFileSize(image.size)}
               </p>
@@ -154,7 +165,8 @@ export default function ImageUploader() {
             <button
               type="button"
               onClick={removeImage}
-              className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/10"
+              disabled={isCompressing}
+              className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
             >
               Remove image
             </button>
@@ -172,8 +184,12 @@ export default function ImageUploader() {
               type="number"
               min="1"
               value={targetSize}
-              onChange={(event) => setTargetSize(Number(event.target.value))}
-              className="w-full rounded-lg border border-white/10 bg-zinc-950 px-4 py-3 outline-none focus:border-violet-400"
+              disabled={isCompressing}
+              onChange={(event) => {
+                setTargetSize(Number(event.target.value));
+                setError("");
+              }}
+              className="w-full rounded-lg border border-white/10 bg-zinc-950 px-4 py-3 outline-none focus:border-violet-400 disabled:cursor-not-allowed disabled:opacity-50"
             />
 
             <span className="text-zinc-400">KB</span>
@@ -187,6 +203,29 @@ export default function ImageUploader() {
           >
             {isCompressing ? "Compressing…" : "Compress image"}
           </button>
+
+          {isCompressing && (
+            <div className="mt-4" aria-live="polite">
+              <div className="mb-2 flex justify-between text-sm text-zinc-400">
+                <span>Compressing image</span>
+                <span>{progress}%</span>
+              </div>
+
+              <div
+                className="h-2 overflow-hidden rounded-full bg-zinc-800"
+                role="progressbar"
+                aria-label="Image compression progress"
+                aria-valuemin={0}
+                aria-valuemax={100}
+                aria-valuenow={progress}
+              >
+                <div
+                  className="h-full rounded-full bg-violet-500 transition-all"
+                  style={{ width: `${progress}%` }}
+                />
+              </div>
+            </div>
+          )}
 
           {error && (
             <p className="mt-3 text-sm text-red-400" role="alert">
@@ -214,6 +253,7 @@ export default function ImageUploader() {
             <dl className="mt-6 grid gap-4 sm:grid-cols-2">
               <div className="rounded-xl bg-black/20 p-4">
                 <dt className="text-sm text-zinc-400">Original size</dt>
+
                 <dd className="mt-1 text-lg font-semibold">
                   {formatFileSize(image.size)}
                 </dd>
@@ -221,6 +261,7 @@ export default function ImageUploader() {
 
               <div className="rounded-xl bg-black/20 p-4">
                 <dt className="text-sm text-zinc-400">Compressed size</dt>
+
                 <dd className="mt-1 text-lg font-semibold text-emerald-300">
                   {formatFileSize(compressedImage.size)}
                 </dd>

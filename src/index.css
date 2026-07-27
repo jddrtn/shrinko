@@ -1,11 +1,70 @@
+@import url("https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Fraunces:opsz,wght@9..144,600;9..144,700;9..144,800&family=Shrikhand&display=swap");
 @import "tailwindcss";
 
-html,
+:root {
+  font-family: "DM Sans", sans-serif;
+  color: #24202c;
+  background: #fff8ec;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+
+  --color-cream: #fff8ec;
+  --color-ink: #24202c;
+  --color-blue: #5267ff;
+  --color-coral: #ff735c;
+  --color-yellow: #ffd84d;
+  --color-mint: #9de3c2;
+}
+
+html {
+  min-height: 100%;
+  scroll-behavior: smooth;
+}
+
 body,
 #root {
-  height: 100%;
+  min-height: 100vh;
 }
 
 body {
   margin: 0;
+  background-color: var(--color-cream);
+}
+
+button,
+input {
+  font: inherit;
+}
+
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+
+button:focus-visible,
+a:focus-visible,
+input:focus-visible {
+  outline: 3px solid var(--color-ink);
+  outline-offset: 3px;
+}
+
+::selection {
+  color: var(--color-ink);
+  background: var(--color-yellow);
+}
+
+.font-display {
+  font-family: "Fraunces", serif;
+}
+
+.font-logo {
+  font-family: "Shrikhand", cursive;
+}
+
+.playful-shadow {
+  box-shadow: 6px 6px 0 var(--color-ink);
+}
+
+.playful-shadow-small {
+  box-shadow: 3px 3px 0 var(--color-ink);
 }
