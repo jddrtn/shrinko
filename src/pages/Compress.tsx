@@ -1,3 +1,17 @@
+import ImageUploader from "../components/ImageUploader";
+
 export default function Compress() {
-  return <h1>Compress</h1>;
+  return (
+    <section className="mx-auto max-w-3xl">
+      <div className="mb-10 text-center">
+        <h1 className="text-4xl font-bold tracking-tight">Compress an image</h1>
+
+        <p className="mt-4 text-zinc-400">
+          Reduce an image's file size without uploading it to a server.
+        </p>
+      </div>
+
+      <ImageUploader />
+    </section>
+  );
 }
