@@ -5,7 +5,7 @@ export default function Home() {
     <div>
       <section className="rounded-[2rem] border-2 border-[#24202c] bg-[#ff735c] px-6 py-16 playful-shadow sm:px-12 sm:py-24">
         <div className="max-w-4xl">
-          <h1 className="font-display max-w-3xl text-5xl font-extrabold leading-[0.95] tracking-tight sm:text-7xl lg:text-8xl">
+          <h1 className="font-display max-w-3xl text-4xl font-extrabold leading-[0.95] tracking-tight">
             Give your images a little{" "}
             <span className="font-logo text-[#fff8ec]">shrink.</span>
           </h1>
