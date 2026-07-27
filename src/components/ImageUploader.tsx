@@ -145,19 +145,21 @@ export default function ImageUploader() {
 
   if (image && previewUrl) {
     return (
-      <section className="space-y-6">
-        <div className="rounded-2xl border border-white/10 bg-zinc-900 p-6">
-          <img
-            src={previewUrl}
-            alt={`Preview of ${image.name}`}
-            className="mx-auto max-h-96 rounded-xl object-contain"
-          />
+      <section className="space-y-8">
+        <div className="rounded-[2rem] border-2 border-[#24202c] bg-[#ffd84d] p-6 playful-shadow sm:p-8">
+          <div className="rounded-2xl border-2 border-[#24202c] bg-[#fff8ec] p-4">
+            <img
+              src={previewUrl}
+              alt={`Preview of ${image.name}`}
+              className="mx-auto max-h-96 rounded-xl object-contain"
+            />
+          </div>
 
           <div className="mt-6 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-            <div>
-              <p className="font-medium">{image.name}</p>
+            <div className="min-w-0">
+              <p className="truncate font-semibold">{image.name}</p>
 
-              <p className="mt-1 text-sm text-zinc-400">
+              <p className="mt-1 text-sm font-medium text-[#554f5d]">
                 Original size: {formatFileSize(image.size)}
               </p>
             </div>
@@ -166,19 +168,26 @@ export default function ImageUploader() {
               type="button"
               onClick={removeImage}
               disabled={isCompressing}
-              className="rounded-lg border border-white/10 px-4 py-2 text-sm font-medium transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-50"
+              className="rounded-full border-2 border-[#24202c] bg-[#fff8ec] px-5 py-2 text-sm font-bold playful-shadow-small transition hover:-translate-y-0.5 hover:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
             >
               Remove image
             </button>
           </div>
         </div>
 
-        <div className="rounded-2xl border border-white/10 bg-zinc-900 p-6">
-          <label htmlFor="target-size" className="block text-sm font-medium">
-            Target file size
+        <div className="rounded-[2rem] border-2 border-[#24202c] bg-[#9de3c2] p-6 playful-shadow sm:p-8">
+          <label
+            htmlFor="target-size"
+            className="font-display block text-2xl font-bold"
+          >
+            Choose your target size
           </label>
 
-          <div className="mt-2 flex items-center gap-3">
+          <p className="mt-2 text-sm font-medium text-[#554f5d]">
+            Enter the maximum file size you would like Shrinko to aim for.
+          </p>
+
+          <div className="mt-5 flex items-center gap-3">
             <input
               id="target-size"
               type="number"
@@ -189,30 +198,33 @@ export default function ImageUploader() {
                 setTargetSize(Number(event.target.value));
                 setError("");
               }}
-              className="w-full rounded-lg border border-white/10 bg-zinc-950 px-4 py-3 outline-none focus:border-violet-400 disabled:cursor-not-allowed disabled:opacity-50"
+              className="w-full rounded-xl border-2 border-[#24202c] bg-[#fff8ec] px-4 py-3 font-semibold outline-none transition focus:bg-white disabled:cursor-not-allowed disabled:opacity-50"
             />
 
-            <span className="text-zinc-400">KB</span>
+            <span className="font-bold">KB</span>
           </div>
 
           <button
             type="button"
             onClick={handleCompress}
             disabled={isCompressing}
-            className="mt-5 w-full rounded-lg bg-violet-500 px-4 py-3 font-semibold transition hover:bg-violet-400 disabled:cursor-not-allowed disabled:opacity-50"
+            className="mt-6 w-full rounded-full border-2 border-[#24202c] bg-[#5267ff] px-4 py-3 font-bold text-white playful-shadow-small transition hover:-translate-y-0.5 hover:bg-[#6678ff] hover:shadow-none disabled:cursor-not-allowed disabled:opacity-50"
           >
             {isCompressing ? "Compressing…" : "Compress image"}
           </button>
 
           {isCompressing && (
-            <div className="mt-4" aria-live="polite">
-              <div className="mb-2 flex justify-between text-sm text-zinc-400">
+            <div
+              className="mt-6 rounded-2xl border-2 border-[#24202c] bg-[#fff8ec] p-4"
+              aria-live="polite"
+            >
+              <div className="mb-2 flex justify-between text-sm font-semibold">
                 <span>Compressing image</span>
                 <span>{progress}%</span>
               </div>
 
               <div
-                className="h-2 overflow-hidden rounded-full bg-zinc-800"
+                className="h-3 overflow-hidden rounded-full border-2 border-[#24202c] bg-white"
                 role="progressbar"
                 aria-label="Image compression progress"
                 aria-valuemin={0}
@@ -220,7 +232,7 @@ export default function ImageUploader() {
                 aria-valuenow={progress}
               >
                 <div
-                  className="h-full rounded-full bg-violet-500 transition-all"
+                  className="h-full bg-[#5267ff] transition-all duration-300"
                   style={{ width: `${progress}%` }}
                 />
               </div>
@@ -228,41 +240,52 @@ export default function ImageUploader() {
           )}
 
           {error && (
-            <p className="mt-3 text-sm text-red-400" role="alert">
+            <p
+              className="mt-5 rounded-xl border-2 border-[#24202c] bg-[#ff735c] p-4 text-sm font-semibold"
+              role="alert"
+            >
               {error}
             </p>
           )}
         </div>
 
         {compressedImage && compressedUrl && (
-          <section className="rounded-2xl border border-emerald-400/30 bg-emerald-400/5 p-6">
-            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-lg font-semibold">Compression complete</h2>
+          <section className="rounded-[2rem] border-2 border-[#24202c] bg-[#6678ff] p-6 playful-shadow sm:p-8">
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="font-display text-3xl font-bold">
+                Compression complete
+              </h2>
 
-              <span className="w-fit rounded-full bg-emerald-400/15 px-3 py-1 text-sm font-medium text-emerald-300">
+              <span className="w-fit rounded-full border-2 border-[#24202c] bg-[#ffd84d] px-4 py-2 text-sm font-bold">
                 {getPercentageSaved()}% smaller
               </span>
             </div>
 
-            <img
-              src={compressedUrl}
-              alt={`Compressed preview of ${image.name}`}
-              className="mx-auto mt-6 max-h-96 rounded-xl object-contain"
-            />
+            <div className="mt-6 rounded-2xl border-2 border-[#24202c] bg-[#fff8ec] p-4">
+              <img
+                src={compressedUrl}
+                alt={`Compressed preview of ${image.name}`}
+                className="mx-auto max-h-96 rounded-xl object-contain"
+              />
+            </div>
 
             <dl className="mt-6 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-xl bg-black/20 p-4">
-                <dt className="text-sm text-zinc-400">Original size</dt>
+              <div className="rounded-2xl border-2 border-[#24202c] bg-[#fff8ec] p-4">
+                <dt className="text-sm font-medium text-[#554f5d]">
+                  Original size
+                </dt>
 
-                <dd className="mt-1 text-lg font-semibold">
+                <dd className="mt-1 text-lg font-bold">
                   {formatFileSize(image.size)}
                 </dd>
               </div>
 
-              <div className="rounded-xl bg-black/20 p-4">
-                <dt className="text-sm text-zinc-400">Compressed size</dt>
+              <div className="rounded-2xl border-2 border-[#24202c] bg-[#9de3c2] p-4">
+                <dt className="text-sm font-medium text-[#554f5d]">
+                  Compressed size
+                </dt>
 
-                <dd className="mt-1 text-lg font-semibold text-emerald-300">
+                <dd className="mt-1 text-lg font-bold">
                   {formatFileSize(compressedImage.size)}
                 </dd>
               </div>
@@ -271,7 +294,7 @@ export default function ImageUploader() {
             <a
               href={compressedUrl}
               download={getDownloadName()}
-              className="mt-6 block rounded-lg bg-emerald-500 px-4 py-3 text-center font-semibold text-zinc-950 transition hover:bg-emerald-400"
+              className="mt-6 block rounded-full border-2 border-[#24202c] bg-[#ffd84d] px-4 py-3 text-center font-bold playful-shadow-small transition hover:-translate-y-0.5 hover:shadow-none"
             >
               Download compressed image
             </a>
@@ -285,25 +308,35 @@ export default function ImageUploader() {
     <section>
       <div
         {...getRootProps()}
-        className={`flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-2xl border-2 border-dashed p-8 text-center transition ${
+        className={`flex min-h-72 cursor-pointer flex-col items-center justify-center rounded-[2rem] border-2 border-dashed border-[#24202c] p-8 text-center transition ${
           isDragActive
-            ? "border-violet-400 bg-violet-400/10"
-            : "border-white/20 bg-zinc-900 hover:border-white/40"
+            ? "scale-[1.01] bg-[#9de3c2]"
+            : "bg-[#ffd84d] hover:bg-[#ffe477]"
         }`}
       >
         <input {...getInputProps()} />
 
-        <p className="text-lg font-semibold">
+        <span
+          aria-hidden="true"
+          className="mb-5 flex h-16 w-16 items-center justify-center rounded-full border-2 border-[#24202c] bg-[#fff8ec] text-3xl playful-shadow-small"
+        >
+          ↑
+        </span>
+
+        <p className="font-display text-2xl font-bold">
           {isDragActive ? "Drop your image here" : "Drag and drop an image"}
         </p>
 
-        <p className="mt-2 text-sm text-zinc-400">
+        <p className="mt-2 text-sm font-medium text-[#554f5d]">
           Or click to choose a JPG, PNG or WebP file
         </p>
       </div>
 
       {fileRejections.length > 0 && (
-        <p className="mt-3 text-sm text-red-400" role="alert">
+        <p
+          className="mt-4 rounded-xl border-2 border-[#24202c] bg-[#ff735c] p-3 text-sm font-semibold"
+          role="alert"
+        >
           Please select a valid JPG, PNG or WebP image.
         </p>
       )}
