@@ -114,10 +114,23 @@ export default function ImageUploader() {
     }
 
     const dotPosition = image.name.lastIndexOf(".");
-    const name = dotPosition === -1 ? image.name : image.name.slice(0, dotPosition);
-    const extension = dotPosition === -1 ? "" : image.name.slice(dotPosition);
+    const name =
+      dotPosition === -1 ? image.name : image.name.slice(0, dotPosition);
+    const extension =
+      dotPosition === -1 ? "" : image.name.slice(dotPosition);
 
     return `${name}-compressed${extension}`;
+  };
+
+  const getPercentageSaved = () => {
+    if (!image || !compressedImage) {
+      return 0;
+    }
+
+    return Math.max(
+      0,
+      Math.round(((image.size - compressedImage.size) / image.size) * 100),
+    );
   };
 
   if (image && previewUrl) {
@@ -149,10 +162,7 @@ export default function ImageUploader() {
         </div>
 
         <div className="rounded-2xl border border-white/10 bg-zinc-900 p-6">
-          <label
-            htmlFor="target-size"
-            className="block text-sm font-medium"
-          >
+          <label htmlFor="target-size" className="block text-sm font-medium">
             Target file size
           </label>
 
@@ -186,24 +196,36 @@ export default function ImageUploader() {
         </div>
 
         {compressedImage && compressedUrl && (
-          <div className="rounded-2xl border border-emerald-400/30 bg-emerald-400/5 p-6">
-            <h2 className="text-lg font-semibold">Compression complete</h2>
+          <section className="rounded-2xl border border-emerald-400/30 bg-emerald-400/5 p-6">
+            <div className="flex flex-col gap-2 sm:flex-row sm:items-center sm:justify-between">
+              <h2 className="text-lg font-semibold">Compression complete</h2>
 
-            <div className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
-              <p className="text-zinc-400">
-                Original:{" "}
-                <span className="text-white">
-                  {formatFileSize(image.size)}
-                </span>
-              </p>
-
-              <p className="text-zinc-400">
-                Compressed:{" "}
-                <span className="text-white">
-                  {formatFileSize(compressedImage.size)}
-                </span>
-              </p>
+              <span className="w-fit rounded-full bg-emerald-400/15 px-3 py-1 text-sm font-medium text-emerald-300">
+                {getPercentageSaved()}% smaller
+              </span>
             </div>
+
+            <img
+              src={compressedUrl}
+              alt={`Compressed preview of ${image.name}`}
+              className="mx-auto mt-6 max-h-96 rounded-xl object-contain"
+            />
+
+            <dl className="mt-6 grid gap-4 sm:grid-cols-2">
+              <div className="rounded-xl bg-black/20 p-4">
+                <dt className="text-sm text-zinc-400">Original size</dt>
+                <dd className="mt-1 text-lg font-semibold">
+                  {formatFileSize(image.size)}
+                </dd>
+              </div>
+
+              <div className="rounded-xl bg-black/20 p-4">
+                <dt className="text-sm text-zinc-400">Compressed size</dt>
+                <dd className="mt-1 text-lg font-semibold text-emerald-300">
+                  {formatFileSize(compressedImage.size)}
+                </dd>
+              </div>
+            </dl>
 
             <a
               href={compressedUrl}
@@ -212,7 +234,7 @@ export default function ImageUploader() {
             >
               Download compressed image
             </a>
-          </div>
+          </section>
         )}
       </section>
     );
