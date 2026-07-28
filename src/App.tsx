@@ -13,29 +13,20 @@ export default function App() {
           <Link
             to="/"
             className="font-logo inline-block origin-left text-2xl transition-transform duration-300 ease-out hover:scale-x-50 hover:scale-y-75 motion-reduce:transform-none"
-              >
+          >
             Shrinko
           </Link>
 
           <div className="flex gap-2 text-sm font-semibold sm:gap-4">
-            <Link
-              to="/compress"
-              className="rounded-full px-3 py-2 transition hover:bg-[#ff735c]"
-            >
+            <Link to="/compress" className="rounded-full px-3 py-2">
               Compress
             </Link>
 
-            <Link
-              to="/resize"
-              className="rounded-full px-3 py-2 transition hover:bg-[#9de3c2]"
-            >
+            <Link to="/resize" className="rounded-full px-3 py-2">
               Resize
             </Link>
 
-            <Link
-              to="/convert"
-              className="rounded-full px-3 py-2 transition hover:bg-[#5267ff] hover:text-white"
-            >
+            <Link to="/convert" className="rounded-full px-3 py-2">
               Convert
             </Link>
           </div>

@@ -94,7 +94,7 @@ export default function Home() {
             <h3 className="font-display text-3xl font-bold">Convert</h3>
 
             <p className="mt-3 flex-1 leading-relaxed">
-              Turn JPG, PNG and WebP images into the format you need.
+              Turn JPG, PNG or WebP images into the format you need.
             </p>
 
             <Link
