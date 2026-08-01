@@ -1,3 +1,3 @@
 export default function Convert() {
-  return <h1>Convert</h1>;
+  return <h1>Coming soon!</h1>;
 }
