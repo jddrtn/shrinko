@@ -227,8 +227,8 @@ export default function Resize() {
   };
 
   return (
-    <div className="mb-10 text-center">
-      <header className="mb-10">
+    <section className="mx-auto max-w-3xl">
+      <header className="mb-10 text-center">
 
         <h1 className="text-4xl font-bold tracking-tight">
           Re-size an image
@@ -448,6 +448,6 @@ export default function Resize() {
           )}
         </section>
       )}
-    </div>
+    </section>
   );
 }
